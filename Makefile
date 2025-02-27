@@ -5,11 +5,14 @@ NAME_EXEC = pipex
 LIBFT_LIB = ./libft/libft.a
 
 Sources = pipex.c\
+	manage_input_output.c\
+	manage_process.c\
+	manage_env.c\
 	manage_exec_params.c
 
 OBJ = $(Sources:.c=.o)
 
-flags = -Wall -Wextra -Werror
+flags = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 
@@ -24,6 +27,7 @@ clean:
 	rm -f $(OBJ)
 
 fclean: clean
+	make fclean -C ./libft
 	rm -f $(NAME) $(NAME_EXEC)
 
 re: fclean $(NAME)

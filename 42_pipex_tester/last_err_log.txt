@@ -1,0 +1,137 @@
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 2:
+[0m[1m./pipex "infiles/basic.txt" "ls -la" "cat -e" "outfiles/outfile" 
+< infiles/basic.txt ls -la | cat -e > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+total 56$							total 56$
+drwxr-xr-x 5 jose-ara 2024_malaga   174 Feb 27 18:23 .$		drwxr-xr-x 5 jose-ara 2024_malaga   174 Feb 27 18:23 .$
+drwxr-xr-x 5 jose-ara 2024_malaga  4096 Feb 27 18:23 ..$	drwxr-xr-x 5 jose-ara 2024_malaga  4096 Feb 27 18:23 ..$
+drwxr-xr-x 8 jose-ara 2024_malaga   163 Feb 14 14:27 .git$	drwxr-xr-x 8 jose-ara 2024_malaga   163 Feb 14 14:27 .git$
+-rw-r--r-- 1 jose-ara 2024_malaga  1070 Feb 13 20:52 LICENSE$ <
+-rw-r--r-- 1 jose-ara 2024_malaga  2470 Feb 13 20:52 README.m <
+drwxr-xr-x 2 jose-ara 2024_malaga    94 Feb 13 20:53 infiles$	drwxr-xr-x 2 jose-ara 2024_malaga    94 Feb 13 20:53 infiles$
+-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 27 18:23 last_err	-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 27 18:23 last_err
+							      >	-rw-r--r-- 1 jose-ara 2024_malaga  1070 Feb 13 20:52 LICENSE$
+-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 20 18:20 out$	-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 20 18:20 out$
+drwxr-xr-x 2 jose-ara 2024_malaga    43 Feb 27 18:23 outfiles	drwxr-xr-x 2 jose-ara 2024_malaga    43 Feb 27 18:23 outfiles
+-rwxr-xr-x 1 jose-ara 2024_malaga 27592 Feb 27 18:23 pipex$	-rwxr-xr-x 1 jose-ara 2024_malaga 27592 Feb 27 18:23 pipex$
+							      >	-rw-r--r-- 1 jose-ara 2024_malaga  2470 Feb 13 20:52 README.m
+-rw-r--r-- 1 jose-ara 2024_malaga  3944 Feb 13 20:52 run.sh$	-rw-r--r-- 1 jose-ara 2024_malaga  3944 Feb 13 20:52 run.sh$
+-rw-r--r-- 1 jose-ara 2024_malaga  4947 Feb 13 20:52 test.sh$	-rw-r--r-- 1 jose-ara 2024_malaga  4947 Feb 13 20:52 test.sh$
+-rw-r--r-- 1 jose-ara 2024_malaga  1820 Feb 13 20:52 utils.sh	-rw-r--r-- 1 jose-ara 2024_malaga  1820 Feb 13 20:52 utils.sh
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 3:
+[0m[1m./pipex "infiles/basic.txt" "ls -l -a" "cat -e -n" "outfiles/outfile" 
+< infiles/basic.txt ls -l -a | cat -e -n > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+     1	total 60$						     1	total 60$
+     2	drwxr-xr-x 5 jose-ara 2024_malaga   174 Feb 27 18:23 	     2	drwxr-xr-x 5 jose-ara 2024_malaga   174 Feb 27 18:23 
+     3	drwxr-xr-x 5 jose-ara 2024_malaga  4096 Feb 27 18:23 	     3	drwxr-xr-x 5 jose-ara 2024_malaga  4096 Feb 27 18:23 
+     4	drwxr-xr-x 8 jose-ara 2024_malaga   163 Feb 14 14:27 	     4	drwxr-xr-x 8 jose-ara 2024_malaga   163 Feb 14 14:27 
+     5	-rw-r--r-- 1 jose-ara 2024_malaga  1070 Feb 13 20:52  |	     5	drwxr-xr-x 2 jose-ara 2024_malaga    94 Feb 13 20:53 
+     6	-rw-r--r-- 1 jose-ara 2024_malaga  2470 Feb 13 20:52  |	     6	-rw-r--r-- 1 jose-ara 2024_malaga  2036 Feb 27 18:23 
+     7	drwxr-xr-x 2 jose-ara 2024_malaga    94 Feb 13 20:53  |	     7	-rw-r--r-- 1 jose-ara 2024_malaga  1070 Feb 13 20:52 
+     8	-rw-r--r-- 1 jose-ara 2024_malaga  2036 Feb 27 18:23  |	     8	-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 20 18:20 
+     9	-rw-r--r-- 1 jose-ara 2024_malaga     0 Feb 20 18:20  |	     9	drwxr-xr-x 2 jose-ara 2024_malaga    43 Feb 27 18:23 
+    10	drwxr-xr-x 2 jose-ara 2024_malaga    43 Feb 27 18:23  |	    10	-rwxr-xr-x 1 jose-ara 2024_malaga 27592 Feb 27 18:23 
+    11	-rwxr-xr-x 1 jose-ara 2024_malaga 27592 Feb 27 18:23  |	    11	-rw-r--r-- 1 jose-ara 2024_malaga  2470 Feb 13 20:52 
+    12	-rw-r--r-- 1 jose-ara 2024_malaga  3944 Feb 13 20:52 	    12	-rw-r--r-- 1 jose-ara 2024_malaga  3944 Feb 13 20:52 
+    13	-rw-r--r-- 1 jose-ara 2024_malaga  4947 Feb 13 20:52 	    13	-rw-r--r-- 1 jose-ara 2024_malaga  4947 Feb 13 20:52 
+    14	-rw-r--r-- 1 jose-ara 2024_malaga  1820 Feb 13 20:52 	    14	-rw-r--r-- 1 jose-ara 2024_malaga  1820 Feb 13 20:52 
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 9:
+[0m[1m./pipex "infiles/basic.txt" "sleep 3" "ls" "outfiles/outfile" 
+< infiles/basic.txt sleep 3 | ls > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+LICENSE							      <
+README.md						      <
+infiles								infiles
+last_err_log.txt						last_err_log.txt
+							      >	LICENSE
+out								out
+outfiles							outfiles
+pipex								pipex
+							      >	README.md
+run.sh								run.sh
+test.sh								test.sh
+utils.sh							utils.sh
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 11:
+[0m[1m./pipex "nonexistingfile" "cat -e" "ls" "outfiles/outfile" 
+< nonexistingfile cat -e | ls > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+LICENSE							      <
+README.md						      <
+infiles								infiles
+last_err_log.txt						last_err_log.txt
+							      >	LICENSE
+out								out
+outfiles							outfiles
+pipex								pipex
+							      >	README.md
+run.sh								run.sh
+test.sh								test.sh
+utils.sh							utils.sh
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 13:
+[0m[1m./pipex "infiles/infile_without_permissions" "cat -e" "cat -e" "outfiles/outfile" 
+< infiles/infile_without_permissions cat -e | cat -e > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+$$							      <
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 17:
+[0m[1m./pipex "infiles/basic.txt" "nonexistingcommand" "cat -e" "outfiles/outfile" 
+< infiles/basic.txt nonexistingcommand | cat -e > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+ Good draw knew bred ham busy his hour. Ask agreed answer rat <
+$							      <
+Did shy say mention enabled through elderly improve. As at so <
+$							      <
+Finished her are its honoured drawings nor. Pretty see mutual <
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 18:
+[0m[1m./pipex "infiles/basic.txt" "cat -e" "nonexistingcommand" "outfiles/outfile" 
+< infiles/basic.txt cat -e | nonexistingcommand > outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+ Good draw knew bred ham busy his hour. Ask agreed answer rat <
+$							      <
+Did shy say mention enabled through elderly improve. As at so <
+$							      <
+Finished her are its honoured drawings nor. Pretty see mutual <
+
+[31;1m------------------------------------------------------------------------------------------------------------------------
+TEST 28:
+[0m[1m./pipex "here_doc" "EOF" "cat -e" "cat -e" "outfiles/outfile" 
+cat -e << EOF | cat -e >> outfiles/outfile_tester
+
+[0m[31;1mOutput: [0m
+[31;1moutfiles/outfile:                                               [32;1moutfiles/outfile_tester:[0m
+							      >	This is random text echoed into existing outfiles before 
+							      >	applying pipex. This allows to verify whether your program
+							      >	and the original replace or append existing text
+Hello$$								Hello$$
+Hello$$								Hello$$
+Hello$$								Hello$$
+EOF$$							      <
+$$							      <
+

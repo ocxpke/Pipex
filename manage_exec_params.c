@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/02/15 17:00:19 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:24:27 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ size_t	take_split_len(char **splitted)
 {
 	size_t	cont;
 
-	if (!splitted)
+	if (!splitted || !(*splitted))
 		return (0);
 	cont = 0;
 	while (splitted[cont])
@@ -24,48 +24,79 @@ size_t	take_split_len(char **splitted)
 	return (cont);
 }
 
-char	*init_command(char *command)
+char	*init_command(char *command, char *path)
 {
 	char	*ret;
 	size_t	len;
 	size_t	command_len;
+	size_t	path_len;
 
+	path_len = ft_strlen(path);
 	command_len = ft_strlen(command);
-	len = 5 + command_len + 1;
+	len = path_len + command_len + 1 + 1;
 	ret = (char *)ft_calloc(1, len);
 	if (!ret)
 		return (perror("Error with calloc at init command"), NULL);
-	ft_strlcat(ret, "/bin/", 6);
+	ft_strlcat(ret, path, path_len + 1);
+	ft_strlcat(ret, "/", path_len + 2);
 	ft_strlcat(ret, command, command_len + ft_strlen(ret) + 1);
 	return (ret);
 }
 
-char	**prepare_args_exec(char *command, char *file_in, char *exec_out,
-		int first)
+char	**concat_splitted_command(size_t split_len, char **ret, char **splitted,
+		char *command_path)
 {
-	char	**ret;
-	char	**splitted;
 	size_t	i;
-	size_t	split_len;
 
-	splitted = ft_split(command, ' ');
-	split_len = take_split_len(splitted);
-	if (!splitted)
-		return (perror("Error at split"), NULL);
-	ret = (char **)ft_calloc(split_len + 1 + 1, sizeof(char *));
-	if (!ret)
-		return (perror("Error with calloc for args_exec"), NULL);
-	ret[0] = init_command(splitted[0]);
+	ret[0] = command_path;
 	i = 1;
 	while (i < split_len)
 	{
 		ret[i] = ft_strdup(splitted[i]);
 		i++;
 	}
-	if (first)
-		ret[i] = ft_strdup(file_in);
-	else
-		ret[i] = ft_strdup(exec_out);
 	free_back_splitted(splitted);
 	return (ret);
+}
+
+char	**prepare_args_exec(char *command, char *env_path)
+{
+	char	**ret;
+	char	**comm_sp;
+	char	*com_path;
+	size_t	split_len;
+
+	if (ft_strlen(command) == 0 || !env_path)
+		return (NULL);
+	comm_sp = ft_split(command, ' ');
+	if (!comm_sp)
+		return (perror("Error at split"), NULL);
+	split_len = take_split_len(comm_sp);
+	com_path = find_command_exec(comm_sp[0], env_path);
+	if (!com_path)
+		return (free_back_splitted(comm_sp), perror("Com doesn't exist"), NULL);
+	ret = (char **)ft_calloc(split_len + 1, sizeof(char *));
+	if (!ret)
+		return (perror("Error with calloc for args_exec"), NULL);
+	return (concat_splitted_command(split_len, ret, comm_sp, com_path));
+}
+
+void	exec_params(int argc, char **argv, char *env_path, int *exit_status)
+{
+	char	**args_exec;
+	int		i;
+
+	i = 2;
+	while (i < (argc - 1))
+	{
+		args_exec = prepare_args_exec(argv[i], env_path);
+		if (args_exec)
+		{
+			fork_and_exec(args_exec, exit_status);
+			free_back_splitted(args_exec);
+		}
+		else
+			(*exit_status) = ENOENT;
+		i++;
+	}
 }
