@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:02:10 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/02/27 17:56:35 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:52:21 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	redirect_file_in(char *file_in)
 
 	fd_in = open(file_in, O_RDONLY);
 	if (fd_in == -1)
-		return ;
+		fd_in = open("/dev/null", O_RDONLY);
 	dup2(fd_in, 0);
 	close(fd_in);
 }

@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/02/27 17:56:13 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:10:01 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ int	main(int argc, char **argv, char **env)
 	int		exit_info;
 	int		path_pos;
 	char	*output;
+	pid_t	id;
 
 	if (argc < 5)
 		return (errno = 22, perror("Not enough arguments"), -1);
 	path_pos = find_path_pos(env);
 	redirect_file_in(argv[1]);
-	exec_params(argc, argv, env[path_pos], &exit_info);
+	id = exec_params(argc, argv, env[path_pos], &exit_info);
+	if (waitpid(id, &exit_info, 0) == -1)
+		return (perror("Error at waitpid"), exit(EXIT_FAILURE), -1);
 	output = read_output();
 	write_output(output, argv[argc - 1]);
 	free(output);

@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/02/27 13:24:27 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:09:43 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ char	**prepare_args_exec(char *command, char *env_path)
 	return (concat_splitted_command(split_len, ret, comm_sp, com_path));
 }
 
-void	exec_params(int argc, char **argv, char *env_path, int *exit_status)
+pid_t	exec_params(int argc, char **argv, char *env_path, int *exit_status)
 {
-	char	**args_exec;
 	int		i;
+	pid_t	id;
+	char	**args_exec;
 
 	i = 2;
 	while (i < (argc - 1))
@@ -92,11 +93,12 @@ void	exec_params(int argc, char **argv, char *env_path, int *exit_status)
 		args_exec = prepare_args_exec(argv[i], env_path);
 		if (args_exec)
 		{
-			fork_and_exec(args_exec, exit_status);
+			id = fork_and_exec(args_exec);
 			free_back_splitted(args_exec);
 		}
 		else
-			(*exit_status) = ENOENT;
+			command_err(exit_status);
 		i++;
 	}
+	return (id);
 }

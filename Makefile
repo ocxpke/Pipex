@@ -14,6 +14,11 @@ OBJ = $(Sources:.c=.o)
 
 flags = -Wall -Wextra -Werror -g
 
+FILE1		=	2345
+COMMAND1	=	345
+COMMAND2	=	2345
+FILE2		=	2345
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJGNL) $(OBJPTF)
@@ -36,4 +41,10 @@ exec: $(OBJ)
 	make -C ./libft
 	cc $(flags) $(OBJ) $(LIBFT_LIB) -o $(NAME_EXEC)
 
-.PHONY: all clean fclean re exec
+test: exec
+	./pipex in cat ls out
+
+valdgrind:
+	valgrind --leak-check=full --trace-children=yes --track-fds=yes ./pipex "aaa" "cat -e" "cat -e" "cat -e" "wc" "outfile"
+
+.PHONY: all clean fclean re
