@@ -5,19 +5,15 @@ NAME_EXEC = pipex
 LIBFT_LIB = ./libft/libft.a
 
 Sources = pipex.c\
-	manage_input_output.c\
-	manage_process.c\
 	manage_env.c\
-	manage_exec_params.c
+	manage_process.c\
+	manage_here_doc.c\
+	manage_exec_params.c\
+	manage_input_output.c
 
 OBJ = $(Sources:.c=.o)
 
 flags = -Wall -Wextra -Werror -g
-
-FILE1		=	2345
-COMMAND1	=	345
-COMMAND2	=	2345
-FILE2		=	2345
 
 all: $(NAME)
 
@@ -44,7 +40,7 @@ exec: $(OBJ)
 test: exec
 	./pipex in cat ls out
 
-valdgrind:
+valgrind:
 	valgrind --leak-check=full --trace-children=yes --track-fds=yes ./pipex "aaa" "cat -e" "cat -e" "cat -e" "wc" "outfile"
 
 .PHONY: all clean fclean re

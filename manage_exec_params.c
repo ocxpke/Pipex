@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/02 18:09:43 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:29:52 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ pid_t	exec_params(int argc, char **argv, char *env_path, int *exit_status)
 	char	**args_exec;
 
 	i = 2;
+	if (is_here_doc(argv[1]))
+		i += 1;
 	while (i < (argc - 1))
 	{
 		args_exec = prepare_args_exec(argv[i], env_path);
