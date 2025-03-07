@@ -6,11 +6,22 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/05 22:36:20 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:38:05 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	check_last_process(char *command, char *env)
+{
+	char	**args_exec;
+
+	args_exec = prepare_args_exec(command, env);
+	if (!args_exec)
+		return (-1);
+	free_back_splitted(args_exec);
+	return (0);
+}
 
 char	*concat_str_pipex(char *s1, char *s2)
 {
@@ -40,21 +51,22 @@ char	*concat_str_pipex(char *s1, char *s2)
 
 int	main(int argc, char **argv, char **env)
 {
-	int		exit_info;
-	int		path_pos;
-	char	*output;
-	pid_t	id;
+	int			exit_status;
+	int			path_pos;
+	char		*output;
+	t_waitpid	*group_id;
 
 	if (argc < 5)
 		return (errno = 22, perror("Not enough arguments"), -1);
+	group_id = NULL;
 	path_pos = find_path_pos(env);
 	redirect_file_in(argv);
-	id = exec_params(argc, argv, env[path_pos], &exit_info);
-	if (waitpid(id, &exit_info, 0) == -1)
-		return (perror("Error at waitpid"), exit(EXIT_FAILURE), -1);
-	output = read_output();
+	exec_params(argc, argv, env[path_pos], &group_id);
+	wait_all_proccess(group_id, &exit_status);
+	free_waitpid_list(&group_id);
+	read_output(&output);
 	write_output(argc, argv, &output);
-	if (exit_info == ENOENT)
+	if (check_last_process(argv[argc - 2], env[path_pos]) == -1)
 		return (exit(127), -1);
-	return (WEXITSTATUS(exit_info));
+	return (WEXITSTATUS(exit_status));
 }

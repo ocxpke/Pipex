@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 19:02:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/05 22:36:16 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:33:25 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,44 @@
 # include <stdio.h>
 # include <sys/wait.h>
 
-size_t	take_split_len(char **splitted);
-char	*init_command(char *command, char *path);
-char	**prepare_args_exec(char *command, char *command_path);
-pid_t	exec_params(int argc, char **argv, char *env_path, int *exit_status);
+typedef struct s_waitpid
+{
+	pid_t				process_id;
+	int					exit_status;
+	struct s_waitpid	*next_process;
+}						t_waitpid;
 
-char	*concat_str_pipex(char *s1, char *s2);
+size_t					take_split_len(char **splitted);
+char					*init_command(char *command, char *path);
+char					**prepare_args_exec(char *command, char *command_path);
+void					exec_params(int argc, char **argv, char *env_path,
+							t_waitpid **group_id);
 
-void	write_output(int argc, char **argv, char **str);
-char	*read_output(void);
-void	redirect_file_in(char **argv);
-int		is_here_doc(char *str);
+char					*concat_str_pipex(char *s1, char *s2);
 
-pid_t	fork_and_exec(char **argv);
-void	exec_process(int *fildes, char **args_exec);
-void	redirect_processs_output(int *fildes);
-void	command_err(int *exit_status);
+void					write_output(int argc, char **argv, char **str);
+void					read_output(char **str);
+void					redirect_file_in(char **argv);
+int						is_here_doc(char *str);
 
-int		find_path_pos(char **env);
-char	*find_command_exec(char *command, char *env);
+pid_t					fork_and_exec(char **argv);
+void					exec_process(int *fildes, char **args_exec);
+void					redirect_processs_output(int *fildes);
+void					command_err(void);
 
-char	*text_here_doc(char *limiter);
-void	manage_readed_here_doc(char **ptr, char **gnl, int *end, char *limiter);
-int		is_here_doc(char *str);
-void	file_here_doc(char *text);
+int						find_path_pos(char **env);
+char					*find_command_exec(char *command, char *env);
+
+char					*text_here_doc(char *limiter);
+void					manage_readed_here_doc(char **ptr, char **gnl, int *end,
+							char *limiter);
+int						is_here_doc(char *str);
+void					file_here_doc(char *text);
+
+int						add_node_group_id(t_waitpid **group_id, pid_t id);
+void					wait_all_proccess(t_waitpid *group_id,
+							int *exit_status);
+void					free_waitpid_list(t_waitpid **group_id);
+int						check_last_process(char *command, char *env);
 
 #endif

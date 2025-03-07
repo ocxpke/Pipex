@@ -6,6 +6,7 @@ LIBFT_LIB = ./libft/libft.a
 
 Sources = pipex.c\
 	manage_env.c\
+	manage_wait.c\
 	manage_process.c\
 	manage_here_doc.c\
 	manage_exec_params.c\
@@ -40,7 +41,7 @@ exec: $(OBJ)
 test: exec
 	./pipex in cat ls out
 
-valgrind:
-	valgrind --leak-check=full --trace-children=yes --track-fds=yes ./pipex "aaa" "cat -e" "cat -e" "cat -e" "wc" "outfile"
+valgrind: exec
+	valgrind -s --leak-check=full --trace-children=yes --track-fds=yes ./pipex "aaa" "cat -e" "cat -e" "cat -e" "wc" "outfile"
 
 .PHONY: all clean fclean re

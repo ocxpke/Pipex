@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/05 23:29:52 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:04:18 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**prepare_args_exec(char *command, char *env_path)
 	return (concat_splitted_command(split_len, ret, comm_sp, com_path));
 }
 
-pid_t	exec_params(int argc, char **argv, char *env_path, int *exit_status)
+void	exec_params(int argc, char **argv, char *env_path, t_waitpid **group_id)
 {
 	int		i;
 	pid_t	id;
@@ -96,11 +96,11 @@ pid_t	exec_params(int argc, char **argv, char *env_path, int *exit_status)
 		if (args_exec)
 		{
 			id = fork_and_exec(args_exec);
+			add_node_group_id(group_id, id);
 			free_back_splitted(args_exec);
 		}
 		else
-			command_err(exit_status);
+			command_err();
 		i++;
 	}
-	return (id);
 }

@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:20:08 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/02 17:59:30 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:01:24 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ pid_t	fork_and_exec(char **argv)
 	return (id);
 }
 
-void	command_err(int *exit_status)
+void	command_err(void)
 {
 	int	fd_null;
 
-	(*exit_status) = ENOENT;
 	fd_null = open("/dev/null", O_RDONLY);
 	if (!fd_null)
 		return (exit(EXIT_FAILURE));

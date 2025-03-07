@@ -6,20 +6,20 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:02:10 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/05 23:12:47 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:32:50 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*read_output(void)
+void	read_output(char **str)
 {
 	char	*out;
 	char	*readed;
 
 	out = ft_calloc(1, 1);
 	if (!out)
-		return (perror("Error with calloc -> out"), NULL);
+		return (perror("Error with calloc -> out"), exit(EXIT_FAILURE));
 	readed = "a";
 	while (readed)
 	{
@@ -27,7 +27,7 @@ char	*read_output(void)
 		if (readed)
 			out = concat_str_pipex(out, readed);
 	}
-	return (out);
+	*str = out;
 }
 
 void	write_output(int argc, char **argv, char **str)
