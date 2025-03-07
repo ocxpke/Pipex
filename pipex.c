@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 14:38:05 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:40:26 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 	char		*output;
 	t_waitpid	*group_id;
 
-	if (argc < 5)
+	if ((argc < 5) || (is_here_doc(argv[1]) && (argc < 6)))
 		return (errno = 22, perror("Not enough arguments"), -1);
 	group_id = NULL;
 	path_pos = find_path_pos(env);

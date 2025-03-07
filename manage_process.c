@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:20:08 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 13:01:24 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:01:06 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,15 @@ pid_t	fork_and_exec(char **argv)
 	return (id);
 }
 
-void	command_err(void)
+void	command_err(char *first_arg, int pos)
 {
 	int	fd_null;
 
+	if (!((access(first_arg, R_OK) == -1) && pos == 2))
+	{
+		errno = 2;
+		perror("Command not found");
+	}
 	fd_null = open("/dev/null", O_RDONLY);
 	if (!fd_null)
 		return (exit(EXIT_FAILURE));

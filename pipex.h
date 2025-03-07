@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 19:02:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 14:33:25 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:37:49 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int						is_here_doc(char *str);
 pid_t					fork_and_exec(char **argv);
 void					exec_process(int *fildes, char **args_exec);
 void					redirect_processs_output(int *fildes);
-void					command_err(void);
+void					command_err(char *first_arg, int pos);
 
 int						find_path_pos(char **env);
 char					*find_command_exec(char *command, char *env);

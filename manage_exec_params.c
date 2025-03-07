@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 14:04:18 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:32:49 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**prepare_args_exec(char *command, char *env_path)
 	split_len = take_split_len(comm_sp);
 	com_path = find_command_exec(comm_sp[0], env_path);
 	if (!com_path)
-		return (free_back_splitted(comm_sp), perror("Com doesn't exist"), NULL);
+		return (free_back_splitted(comm_sp), NULL);
 	ret = (char **)ft_calloc(split_len + 1, sizeof(char *));
 	if (!ret)
 		return (perror("Error with calloc for args_exec"), NULL);
@@ -100,7 +100,7 @@ void	exec_params(int argc, char **argv, char *env_path, t_waitpid **group_id)
 			free_back_splitted(args_exec);
 		}
 		else
-			command_err();
+			command_err(argv[1], i);
 		i++;
 	}
 }
