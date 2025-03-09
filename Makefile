@@ -34,10 +34,10 @@ fclean: clean
 
 re: fclean all
 
-test: exec
+test: all
 	./pipex in cat ls out
 
-valgrind: exec
+valgrind: all
 	valgrind -s --leak-check=full --trace-children=yes --track-fds=yes ./pipex "aaa" "cat -e" "cat -e" "cat -e" "wc" "outfile"
 
 .PHONY: all clean fclean re
