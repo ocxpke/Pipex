@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:02:10 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 18:54:27 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:15:03 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	read_output(char **str)
 	readed = "a";
 	while (readed)
 	{
-		readed = get_next_line(0);
+		readed = get_next_line(STDIN_FILENO);
 		if (readed)
 			out = concat_str_pipex(out, readed);
 	}

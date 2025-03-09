@@ -6,11 +6,37 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:32 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 18:32:49 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:04:16 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+/**
+ * @brief Cocatenates all the parts to forma the command to be passed to execve
+ *
+ * @param split_len The length of the splitted argument
+ * @param ret Splitted structure allocated previously,
+ *  where we will store our data
+ * @param splitted Splitted structure with teh params of the command
+ * @param command_path The executable argument with the asociated env
+ * @return The ret pointer, again.
+ */
+static char	**concat_splitted_command(size_t split_len, char **ret,
+		char **splitted, char *command_path)
+{
+	size_t	i;
+
+	ret[0] = command_path;
+	i = 1;
+	while (i < split_len)
+	{
+		ret[i] = ft_strdup(splitted[i]);
+		i++;
+	}
+	free_back_splitted(splitted);
+	return (ret);
+}
 
 size_t	take_split_len(char **splitted)
 {
@@ -40,22 +66,6 @@ char	*init_command(char *command, char *path)
 	ft_strlcat(ret, path, path_len + 1);
 	ft_strlcat(ret, "/", path_len + 2);
 	ft_strlcat(ret, command, command_len + ft_strlen(ret) + 1);
-	return (ret);
-}
-
-char	**concat_splitted_command(size_t split_len, char **ret, char **splitted,
-		char *command_path)
-{
-	size_t	i;
-
-	ret[0] = command_path;
-	i = 1;
-	while (i < split_len)
-	{
-		ret[i] = ft_strdup(splitted[i]);
-		i++;
-	}
-	free_back_splitted(splitted);
 	return (ret);
 }
 
@@ -100,7 +110,7 @@ void	exec_params(int argc, char **argv, char *env_path, t_waitpid **group_id)
 			free_back_splitted(args_exec);
 		}
 		else
-			command_err(argv[1], i);
+			command_err(argc, argv, i);
 		i++;
 	}
 }

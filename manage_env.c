@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:44:29 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 20:00:37 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:16:14 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	*find_command_exec(char *command, char *env)
 	int		i;
 	int		size_sp;
 
-	//Arreglar
 	if (!access(command, X_OK))
-		return (ft_strdup(" "));
+		return (ft_strdup(command));
 	env_splitted = ft_split(&env[5], ':');
 	if (!env_splitted)
 		return (NULL);

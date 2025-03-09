@@ -6,13 +6,21 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:57:22 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 18:40:26 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:41:26 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_last_process(char *command, char *env)
+/**
+ * @brief Checks is the last proccess is executable,
+ * this is done for the return value
+ *
+ * @param command Command to be executed
+ * @param env The PATH string of the enviroment
+ * @return (0 if everything is ok); -1 if something went wrong
+ */
+static int	check_last_process(char *command, char *env)
 {
 	char	**args_exec;
 
@@ -60,6 +68,8 @@ int	main(int argc, char **argv, char **env)
 		return (errno = 22, perror("Not enough arguments"), -1);
 	group_id = NULL;
 	path_pos = find_path_pos(env);
+	if (path_pos == -1)
+		return (errno = 1, perror("Path not found"), exit(EXIT_FAILURE), -1);
 	redirect_file_in(argv);
 	exec_params(argc, argv, env[path_pos], &group_id);
 	wait_all_proccess(group_id, &exit_status);

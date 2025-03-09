@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:20:08 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/07 20:01:06 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:34:28 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_process(int *fildes, char **args_exec)
 	return (perror("Error execve in child process"), exit(errno));
 }
 
-pid_t	fork_and_exec(char **argv)
+pid_t	fork_and_exec(char **args_exec)
 {
 	int		fildes[2];
 	pid_t	id;
@@ -40,24 +40,8 @@ pid_t	fork_and_exec(char **argv)
 	if (id == -1)
 		return (perror("Error calling fork"), exit(EXIT_FAILURE), -1);
 	if (id == 0)
-		exec_process(fildes, argv);
+		exec_process(fildes, args_exec);
 	else
 		redirect_processs_output(fildes);
 	return (id);
-}
-
-void	command_err(char *first_arg, int pos)
-{
-	int	fd_null;
-
-	if (!((access(first_arg, R_OK) == -1) && pos == 2))
-	{
-		errno = 2;
-		perror("Command not found");
-	}
-	fd_null = open("/dev/null", O_RDONLY);
-	if (!fd_null)
-		return (exit(EXIT_FAILURE));
-	dup2(fd_null, STDIN_FILENO);
-	close(fd_null);
 }

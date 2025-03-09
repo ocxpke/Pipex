@@ -6,7 +6,7 @@
 /*   By: jose-ara < jose-ara@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:13:06 by jose-ara          #+#    #+#             */
-/*   Updated: 2025/03/05 23:10:10 by jose-ara         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:06:05 by jose-ara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ char	*text_here_doc(char *limiter)
 	end = 0;
 	while (gnl && !end)
 	{
+		ft_printf("here_doc> ");
 		gnl = get_next_line(STDIN_FILENO);
 		manage_readed_here_doc(&ptr, &gnl, &end, limiter);
 	}
+	if (end != 1)
+		return (free(ptr), free(gnl), exit(EXIT_FAILURE), NULL);
 	return (ptr);
 }
 
